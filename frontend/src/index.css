@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0f;
+  --text: #e6ecff;
+}
+
+[data-theme="light"] {
+  --bg: #f3f6ff;
+  --text: #1a2142;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Outfit", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.glass-card {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  border-radius: 1rem;
+}
+
+.mesh-bg {
+  background:
+    radial-gradient(circle at 15% 25%, rgba(0, 212, 255, 0.22), transparent 36%),
+    radial-gradient(circle at 85% 20%, rgba(123, 47, 255, 0.25), transparent 38%),
+    radial-gradient(circle at 50% 80%, rgba(0, 212, 255, 0.16), transparent 42%),
+    #0a0a0f;
+  animation: drift 11s ease-in-out infinite alternate;
+}
+
+.particle-layer {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+    radial-gradient(circle, rgba(0, 212, 255, 0.26) 1px, transparent 1px);
+  background-size: 34px 34px, 52px 52px;
+  animation: particleFloat 15s linear infinite;
+}
+
+.orbit-card {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+  padding: 0.45rem 0.75rem;
+  backdrop-filter: blur(10px);
+}
+
+.orbit-1 {
+  top: 16%;
+  left: 6%;
+  animation: orbit 12s ease-in-out infinite;
+}
+
+.orbit-2 {
+  top: 24%;
+  right: 6%;
+  animation: orbit 14s ease-in-out infinite reverse;
+}
+
+.orbit-3 {
+  bottom: 12%;
+  left: 44%;
+  animation: orbit 13s ease-in-out infinite;
+}
+
+.snippet {
+  max-width: 80%;
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  background: rgba(10, 10, 15, 0.55);
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.6rem;
+  backdrop-filter: blur(6px);
+}
+
+.glitch {
+  position: relative;
+  color: #e9edff;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+}
+
+.glitch::before {
+  transform: translate(-2px, 0);
+  color: #00d4ff;
+}
+
+.glitch::after {
+  transform: translate(2px, 0);
+  color: #7b2fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#00d4ff, #7b2fff);
+  border-radius: 999px;
+}
+
+@keyframes orbit {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes drift {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(15deg); }
+}
+
+@keyframes particleFloat {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 220px 160px, -120px 200px; }
+}
