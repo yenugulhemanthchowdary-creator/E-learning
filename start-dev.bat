@@ -68,7 +68,7 @@ if not exist "%FRONTEND_DIR%\node_modules" (
   popd
 )
 
-start "EduAI Backend" cmd /k "cd /d ""%BACKEND_DIR%"" && call .venv\Scripts\activate && uvicorn app.main:app --reload --port 8000"
+start "EduAI Backend" cmd /k "cd /d ""%BACKEND_DIR%"" && call .venv\Scripts\activate && uvicorn app.main:app --port 8000"
 start "EduAI Frontend" cmd /k "cd /d ""%FRONTEND_DIR%"" && npm.cmd run dev"
 
 echo.

@@ -57,7 +57,7 @@ copy .env.example .env
 py -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --port 8000
 ```
 
 Notes:
@@ -69,6 +69,12 @@ Notes:
 
 ```powershell
 pip install -r requirements-postgres.txt
+```
+
+Optional development mode (auto-reload):
+
+```powershell
+uvicorn app.main:app --reload --reload-dir app --port 8000
 ```
 
 ### 2. Frontend
