@@ -5,10 +5,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#090e1a",
-        panel: "#121b2f",
-        accent: "#34d399",
-        warning: "#f59e0b",
+        bg: "#0a0a0a",
+        panel: "#141414",
+        accent: "#f5f5f5",
+        warning: "#d97706",
+        primary: {
+          50: "#fafafa",
+          100: "#f5f5f5",
+          200: "#e5e5e5",
+          300: "#d4d4d4",
+          400: "#a3a3a3",
+          500: "#737373",
+          600: "#525252",
+          700: "#404040",
+          800: "#262626",
+        },
       },
     },
   },

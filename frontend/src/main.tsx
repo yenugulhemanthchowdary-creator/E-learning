@@ -8,18 +8,38 @@ import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { ToastProvider } from "./components/ToastProvider";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <ThemeProvider>
-        <AuthProvider>
-          <ToastProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </ToastProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </HelmetProvider>
-  </React.StrictMode>,
-);
+console.log("Starting EduAI application...");
+
+const root = document.getElementById("root");
+console.log("Root element:", root);
+
+if (!root) {
+  throw new Error("Root element not found!");
+}
+
+try {
+  ReactDOM.createRoot(root).render(
+    <React.StrictMode>
+      <HelmetProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <BrowserRouter
+                future={{
+                  v7_startTransition: true,
+                  v7_relativeSplatPath: true,
+                }}
+              >
+                <App />
+              </BrowserRouter>
+            </ToastProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </HelmetProvider>
+    </React.StrictMode>,
+  );
+  console.log("EduAI app rendered successfully");
+} catch (err) {
+  console.error("Failed to render app:", err);
+  root.innerHTML = `<div style="color: red; padding: 20px;">Error rendering app: ${err instanceof Error ? err.message : String(err)}</div>`;
+}

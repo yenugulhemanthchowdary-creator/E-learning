@@ -1,15 +1,3 @@
-from collections.abc import AsyncGenerator
+from app.db.mongo import database, ensure_sequence, get_db, next_sequence
 
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-
-from app.core.config import settings
-
-engine = create_async_engine(settings.database_url, echo=False)
-SessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
-
-
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
-    """Yield an async SQLAlchemy session for request-scoped DB access."""
-
-    async with SessionLocal() as session:
-        yield session
+__all__ = ["database", "ensure_sequence", "get_db", "next_sequence"]

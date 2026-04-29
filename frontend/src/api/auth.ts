@@ -6,6 +6,9 @@ interface BackendUser {
   full_name: string;
   email: string;
   avatar: string;
+  phone?: string | null;
+  bio?: string | null;
+  learning_goals?: string[];
 }
 
 interface BackendAuthResponse {
@@ -20,6 +23,9 @@ function mapUser(user: BackendUser): User {
     fullName: user.full_name,
     email: user.email,
     avatar: user.avatar,
+    phone: user.phone ?? null,
+    bio: user.bio ?? null,
+    learningGoals: user.learning_goals ?? [],
   };
 }
 
@@ -39,13 +45,21 @@ export async function login(email: string, password: string): Promise<AuthRespon
   return mapAuthResponse(response);
 }
 
-export async function register(fullName: string, email: string, password: string): Promise<AuthResponse> {
+export async function register(
+  fullName: string,
+  email: string,
+  password: string,
+  extras?: { phone?: string; bio?: string; learningGoals?: string[] },
+): Promise<AuthResponse> {
   const response = await apiRequest<BackendAuthResponse>("/api/auth/register", {
     method: "POST",
     body: {
       full_name: fullName,
       email,
       password,
+      phone: extras?.phone || null,
+      bio: extras?.bio || null,
+      learning_goals: extras?.learningGoals ?? [],
     },
   });
 

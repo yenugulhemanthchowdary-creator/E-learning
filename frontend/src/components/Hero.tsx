@@ -36,7 +36,7 @@ export function HeroSection() {
   const floatingCards = useMemo(() => ["Python Pro", "React Lab", "AI Bootcamp"], []);
 
   return (
-    <section className="relative min-h-[86vh] overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0F]/80 px-6 py-20 backdrop-blur-xl">
+    <section className="ui-panel relative min-h-[86vh] overflow-hidden rounded-3xl px-6 py-20">
       <div className="pointer-events-none absolute inset-0">
         <div className="mesh-bg absolute inset-0" />
         <div className="particle-layer absolute inset-0" />
@@ -50,7 +50,7 @@ export function HeroSection() {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: index * 0.2, duration: 0.6 }}
-              className="mr-4 inline-block bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-transparent"
+              className="mr-4 inline-block bg-gradient-to-r from-primary-300 to-primary-500 bg-clip-text text-transparent"
             >
               {word}
             </motion.span>
@@ -62,11 +62,11 @@ export function HeroSection() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
             to="/register"
-            className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 font-semibold text-black shadow-[0_0_30px_rgba(0,212,255,0.35)]"
+            className="ui-btn-primary rounded-xl px-6 py-3 font-semibold"
           >
             Start Learning Free
           </Link>
-          <Link to="/courses" className="rounded-xl border border-cyan-300/50 px-6 py-3 font-semibold text-cyan-200">
+          <Link to="/courses" className="ui-btn-secondary rounded-xl px-6 py-3 font-semibold text-slate-100">
             Explore Catalog
           </Link>
         </div>

@@ -1,10 +1,13 @@
 from pathlib import Path
 
+from dotenv import load_dotenv
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parents[2]
 PROJECT_ROOT = BACKEND_DIR.parent
+
+load_dotenv(dotenv_path=BACKEND_DIR / ".env")
 
 
 def _default_database_url() -> str:
@@ -22,8 +25,13 @@ class Settings(BaseSettings):
     )
 
     database_url: str = _default_database_url()
+    mongo_url: str = "mongodb://localhost:27017"
+    mongo_db_name: str = "eduai"
     redis_url: str = "redis://localhost:6379/0"
     openai_api_key: str = ""
+    groq_api_key: str = ""
+    # Default Groq model for tutor chat.
+    groq_model: str = "llama-3.1-8b-instant"
     jwt_secret_key: str = "change-me"
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 60

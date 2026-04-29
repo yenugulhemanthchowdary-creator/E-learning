@@ -47,7 +47,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                     ? "border-red-400/30 bg-red-400/10"
                     : toast.type === "warning"
                       ? "border-amber-400/30 bg-amber-400/10"
-                      : "border-cyan-400/30 bg-cyan-400/10"
+                      : "border-primary-400/35 bg-primary-500/12"
               }`}
             >
               {toast.message}

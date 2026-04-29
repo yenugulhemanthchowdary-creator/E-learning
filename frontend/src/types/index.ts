@@ -5,6 +5,9 @@ export interface User {
   fullName: string;
   email: string;
   avatar: string;
+  phone?: string | null;
+  bio?: string | null;
+  learningGoals?: string[];
 }
 
 export interface Course {
@@ -70,4 +73,48 @@ export interface LearningPathResponse {
   estimated_time: string;
   resources: string[];
   quiz_questions: string[];
+}
+
+export type CompetitionStatus = "open" | "live" | "ended";
+
+export interface QuizCompetition {
+  id: number;
+  title: string;
+  topic: string;
+  difficulty: Difficulty;
+  questionCount: number;
+  secondsPerQuestion: number;
+  maxParticipants: number;
+  isPublic: boolean;
+  status: CompetitionStatus;
+  joinCode: string;
+  createdBy: number;
+  participantCount: number;
+}
+
+export interface CompetitionQuestion {
+  questionIndex: number;
+  totalQuestions: number;
+  prompt: string;
+  options: string[];
+  hint: string;
+  difficulty: Difficulty;
+  topic: string;
+  secondsPerQuestion: number;
+}
+
+export interface CompetitionSubmitResult {
+  correct: boolean;
+  scoreDelta: number;
+  totalScore: number;
+  nextQuestionIndex: number;
+  competitionCompleted: boolean;
+}
+
+export interface CompetitionLeaderboardEntry {
+  userId: number;
+  displayName: string;
+  score: number;
+  answeredQuestions: number;
+  rank: number;
 }

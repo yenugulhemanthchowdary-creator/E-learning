@@ -108,6 +108,8 @@ This opens one terminal window for the backend and one for the frontend, then yo
 DATABASE_URL=sqlite+aiosqlite:///eduai.db
 REDIS_URL=redis://localhost:6379/0
 OPENAI_API_KEY=
+GROQ_API_KEY=
+GROQ_MODEL=llama-3.1-8b-instant
 JWT_SECRET_KEY=change-me
 JWT_ALGORITHM=HS256
 JWT_EXPIRE_MINUTES=60
@@ -119,6 +121,7 @@ CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 ```env
 VITE_API_BASE_URL=
 VITE_API_PROXY_TARGET=http://127.0.0.1:8000
+VITE_GROQ_API_KEY=
 ```
 
 Use `VITE_API_BASE_URL` only when the frontend is deployed separately from the backend.

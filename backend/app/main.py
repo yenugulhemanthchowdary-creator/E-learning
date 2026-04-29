@@ -1,14 +1,12 @@
+import os
 from collections.abc import Sequence
+from datetime import datetime, timezone
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import select, text
-from sqlalchemy.ext.asyncio import AsyncConnection, AsyncSession
 
 from app.core.config import settings
-from app.db.database import SessionLocal, engine
-from app.models.base import Base
-from app.models.course import Course
+from app.db.database import database, ensure_sequence
 from app.routers.api import router as api_router
 
 STARTER_CATALOG: Sequence[dict[str, object]] = (
@@ -127,40 +125,37 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
 )
 
 
-def build_course_description(course: Course) -> str:
+def build_course_description(course: dict[str, object]) -> str:
     return (
-        f"Strengthen your {course.category.lower()} skills through {course.difficulty} lessons, "
+        f"Strengthen your {str(course['category']).lower()} skills through {course['difficulty']} lessons, "
         "guided projects, adaptive quizzes, and mentor-style checkpoints."
     )
 
 
-async def ensure_course_schema(connection: AsyncConnection) -> None:
-    result = await connection.execute(text("PRAGMA table_info(courses)"))
-    columns = {row[1] for row in result}
+async def seed_or_upgrade_courses() -> None:
+    courses = database["courses"]
+    existing_count = await courses.count_documents({})
 
-    if "description" not in columns:
-        await connection.execute(
-            text("ALTER TABLE courses ADD COLUMN description VARCHAR(500) NOT NULL DEFAULT ''")
-        )
-
-
-async def seed_or_upgrade_courses(session: AsyncSession) -> None:
-    existing = await session.execute(select(Course).order_by(Course.id.asc()))
-    courses = list(existing.scalars().all())
-
-    if not courses:
-        session.add_all(Course(**payload) for payload in STARTER_CATALOG)
-        await session.commit()
+    if existing_count == 0:
+        seeded_courses: list[dict[str, object]] = []
+        for index, payload in enumerate(STARTER_CATALOG, start=1):
+            document = dict(payload)
+            document["id"] = index
+            seeded_courses.append(document)
+        if seeded_courses:
+            await courses.insert_many(seeded_courses)
+            await ensure_sequence("courses", len(seeded_courses))
         return
 
-    should_commit = False
-    for course in courses:
-        if not course.description.strip():
-            course.description = build_course_description(course)
-            should_commit = True
+    async for course in courses.find({"description": {"$in": [None, ""]}}):
+        await courses.update_one(
+            {"id": course["id"]},
+            {"$set": {"description": build_course_description(course)}},
+        )
 
-    if should_commit:
-        await session.commit()
+    highest_course = await courses.find_one(sort=[("id", -1)])
+    if highest_course and isinstance(highest_course.get("id"), int):
+        await ensure_sequence("courses", int(highest_course["id"]))
 
 
 app = FastAPI(
@@ -180,19 +175,25 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event() -> None:
-    """Create tables, apply lightweight schema upgrades, and seed starter content."""
+    """Seed MongoDB starter content and initialize sequence counters."""
 
-    async with engine.begin() as connection:
-        await connection.run_sync(Base.metadata.create_all)
-        await ensure_course_schema(connection)
-
-    async with SessionLocal() as session:
-        await seed_or_upgrade_courses(session)
+    print("GROQ KEY:", bool(os.getenv("GROQ_API_KEY")))
+    print("GROQ KEY (settings):", bool(settings.groq_api_key))
+    await seed_or_upgrade_courses()
 
 
 @app.get("/health", tags=["Health"])
 async def health_check() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/", tags=["Health"])
+async def root() -> dict[str, str]:
+    return {
+        "message": "EduAI backend is running",
+        "health": "/health",
+        "docs": "/docs",
+    }
 
 
 app.include_router(api_router)

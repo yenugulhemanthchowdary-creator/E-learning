@@ -43,7 +43,7 @@ if not exist "%BACKEND_DIR%\.venv\Scripts\python.exe" (
 echo Installing backend dependencies...
 pushd "%BACKEND_DIR%"
 call .venv\Scripts\activate
-python -m pip install -r requirements.txt
+"%BACKEND_DIR%\.venv\Scripts\python.exe" -m pip install -r requirements.txt
 if errorlevel 1 (
   popd
   echo.
@@ -68,8 +68,19 @@ if not exist "%FRONTEND_DIR%\node_modules" (
   popd
 )
 
-start "EduAI Backend" cmd /k "cd /d ""%BACKEND_DIR%"" && call .venv\Scripts\activate && uvicorn app.main:app --port 8000"
-start "EduAI Frontend" cmd /k "cd /d ""%FRONTEND_DIR%"" && npm.cmd run dev"
+netstat -ano | findstr ":8000" | findstr "LISTENING" >nul
+if errorlevel 1 (
+  start "EduAI Backend" cmd /k "cd /d ""%BACKEND_DIR%"" && call .venv\Scripts\activate && python -m uvicorn app.main:app --reload --port 8000"
+) else (
+  echo Backend already running on port 8000. Skipping new backend launch.
+)
+
+netstat -ano | findstr ":5173" | findstr "LISTENING" >nul
+if errorlevel 1 (
+  start "EduAI Frontend" cmd /k "cd /d ""%FRONTEND_DIR%"" && npm.cmd run dev"
+) else (
+  echo Frontend already running on port 5173. Skipping new frontend launch.
+)
 
 echo.
 echo Backend and frontend windows have been opened.

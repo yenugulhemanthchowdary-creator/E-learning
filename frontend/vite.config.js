@@ -6,6 +6,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    resolve: {
+      extensions: [".ts", ".tsx", ".js", ".jsx", ".mjs", ".json"],
+    },
     server: {
       port: 5173,
       proxy: {

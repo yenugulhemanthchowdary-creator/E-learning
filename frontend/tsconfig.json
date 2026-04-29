@@ -6,6 +6,7 @@
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "strict": true,
+    "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
