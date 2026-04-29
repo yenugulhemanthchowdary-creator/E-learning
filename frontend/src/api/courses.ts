@@ -15,6 +15,7 @@ interface BackendCourse {
   progress: number;
   ai_recommended: boolean;
   students: number;
+  video_id: string;
   created_at: string;
 }
 
@@ -33,6 +34,7 @@ function mapCourse(course: BackendCourse): Course {
     progress: course.progress,
     aiRecommended: course.ai_recommended,
     students: course.students,
+    videoId: course.video_id,
     createdAt: course.created_at,
   };
 }

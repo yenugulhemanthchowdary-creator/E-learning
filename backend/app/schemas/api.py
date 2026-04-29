@@ -111,6 +111,7 @@ class CourseResponse(BaseModel):
     progress: int
     ai_recommended: bool
     students: int
+    video_id: str = ""
     created_at: str
 
 

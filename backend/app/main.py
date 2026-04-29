@@ -22,6 +22,7 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
         "price": 499,
         "ai_recommended": True,
         "students": 12400,
+        "videoId": "_uQrJ0TkZlc",
         "created_at": "2026-02-01T00:00:00",
     },
     {
@@ -36,6 +37,7 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
         "price": 999,
         "ai_recommended": True,
         "students": 8900,
+        "videoId": "w7ejDZ8SWv8",
         "created_at": "2026-02-03T00:00:00",
     },
     {
@@ -50,6 +52,7 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
         "price": 1999,
         "ai_recommended": True,
         "students": 6200,
+        "videoId": "GwIo3gDZCVQ",
         "created_at": "2026-02-05T00:00:00",
     },
     {
@@ -64,6 +67,7 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
         "price": 299,
         "ai_recommended": False,
         "students": 9100,
+        "videoId": "HXV3zeQKqGY",
         "created_at": "2026-02-07T00:00:00",
     },
     {
@@ -78,6 +82,7 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
         "price": 899,
         "ai_recommended": False,
         "students": 5400,
+        "videoId": "PkZNo7MFNFg",
         "created_at": "2026-02-09T00:00:00",
     },
     {
@@ -92,6 +97,7 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
         "price": 1499,
         "ai_recommended": True,
         "students": 4300,
+        "videoId": "pQN-pnXPaVg",
         "created_at": "2026-02-11T00:00:00",
     },
     {
@@ -106,6 +112,7 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
         "price": 549,
         "ai_recommended": False,
         "students": 5100,
+        "videoId": "pQN-pnXPaVg",
         "created_at": "2026-02-13T00:00:00",
     },
     {
@@ -120,6 +127,7 @@ STARTER_CATALOG: Sequence[dict[str, object]] = (
         "price": 1299,
         "ai_recommended": True,
         "students": 4700,
+        "videoId": "PkZNo7MFNFg",
         "created_at": "2026-02-15T00:00:00",
     },
 )

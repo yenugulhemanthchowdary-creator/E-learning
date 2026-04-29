@@ -126,7 +126,27 @@ export function CourseDetailPage() {
         <title>EduAI | {course.title}</title>
         <meta name="description" content={course.description} />
       </Helmet>
-      <img src={course.thumbnail} alt={course.title} className="h-72 w-full rounded-3xl object-cover" />
+      
+      {/* YouTube Video Player */}
+      <div className="rounded-3xl bg-slate-900/40 p-2">
+        {course.videoId ? (
+          <iframe
+            width="100%"
+            height="450"
+            src={`https://www.youtube.com/embed/${course.videoId}?autoplay=0&rel=0`}
+            title="Course Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ borderRadius: "12px" }}
+          />
+        ) : (
+          <div className="h-72 w-full rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
+            <img src={course.thumbnail} alt={course.title} className="h-full w-full rounded-2xl object-cover" />
+          </div>
+        )}
+      </div>
+      
       <div className="grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
         <section className="glass-card p-6">
           <div className="flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-primary-300">

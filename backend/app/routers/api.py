@@ -174,6 +174,7 @@ def serialize_course(course: dict, progress: int) -> CourseResponse:
         progress=progress,
         ai_recommended=bool(course.get("ai_recommended", False)),
         students=int(course.get("students", 0)),
+        video_id=str(course.get("videoId", "")),
         created_at=str(course.get("created_at", "")),
     )
 

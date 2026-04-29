@@ -24,6 +24,7 @@ export interface Course {
   progress: number;
   aiRecommended: boolean;
   students: number;
+  videoId: string;
   createdAt: string;
 }
 
